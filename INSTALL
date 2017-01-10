@@ -7,7 +7,7 @@ install.packages("fGarch")
 
 ## 1.1 download a zipped findGSE and create a tar.gz
 cd path/to/target/folder
-wget https://github.com/schneebergerlab/findGSE.git
+wget https://github.com/schneebergerlab/findGSE/archive/master.zip
 unzip master.zip
 tar -czvf findGSE-master.tar.gz findGSE-master/
 ## 1.2 install under R
