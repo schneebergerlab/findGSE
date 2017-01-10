@@ -7,7 +7,7 @@ install.packages("fGarch")
 
 ## 1.1 download a zipped findGSE and create a tar.gz
 cd path/to/target/folder
-wget https://github.com/HeQSun/findGSE/archive/master.zip
+wget https://github.com/schneebergerlab/findGSE.git
 unzip master.zip
 tar -czvf findGSE-master.tar.gz findGSE-master/
 ## 1.2 install under R
@@ -16,5 +16,5 @@ install.packages("findGSE-master.tar.gz")
 
 # way 2: from github
 
-install.packages("devtools")
-devtools::install_github("HeQSun/findGSE")
+# install.packages("devtools")
+# devtools::install_github("schneebergerlab/findGSE")
