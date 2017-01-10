@@ -1,0 +1,2 @@
+# findGSE
+findGSE is a tool for estimating size of (heterozygous diploid or homozygous) genomes by fitting k-mer frequencies iteratively with a skew normal distribution model. To use findGSE, one needs to prepare a k-mer histo file generated with short reads, which contains two tab-separated columns. The first column gives frequencies at which k-mers occur in reads, while the second column gives counts of such distinct k-mers. That is, k is also a required information.
