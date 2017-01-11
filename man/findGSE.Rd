@@ -30,10 +30,6 @@ average k-mer coverage for the homozygous k-mers.
 Two estimates will be provied as ORIGINAL_EST CORRECTED_EST:
 for males,   select the second (CORRECTED_EST);
 for females, select the first  (ORIGINAL_EST)..}
-
-\item{het_delta}{an optional parameter for tunning the fitted curve of heterzygous regions, range in [0, 0.25].
-This is used to control the "overfitting" problem, and it is only functional when exp_hom is on.
-If not provided, 0.11 by default would be applied.}
 }
 \description{
 findGSE is a function for (heterozygous diploid or homozygous)

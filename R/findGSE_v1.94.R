@@ -141,9 +141,6 @@ kmer_count_modify <- function(start, end, left_right, histx)
 #' Two estimates will be provied as ORIGINAL_EST CORRECTED_EST:
 #' for males,   select the second (CORRECTED_EST);
 #' for females, select the first  (ORIGINAL_EST)..
-#' @param het_delta an optional parameter for tunning the fitted curve of heterzygous regions, range in [0, 0.25].
-#' This is used to control the "overfitting" problem, and it is only functional when exp_hom is on.
-#' If not provided, 0.11 by default would be applied.
 #' @export
 findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
 {
@@ -863,22 +860,31 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
           if(het_observed)
           {
             legend("topright",
-                   fill   = c('gray','white', 'white', 'cyan', 'white', 'blue', 'white', 'white', 'white', 'red', 'white', 'white'),
-                   legend = c(paste('Observed (obs.): ',      round(genome_size/10^6, digits = 3), ' Mb (error-excluded: ',
+                   fill   = c('gray','white', 'white', 'cyan', 'white', 'blue',
+                              'white', 'white', 'white', 'red', 'white', 'white'),
+                   legend = c(paste('Observed (obs.): ',
+                                    round(genome_size/10^6, digits = 3), ' Mb (error-excluded: ',
                                     round(genome_size_filtering_error/10^6, digits = 3), ' Mb)', sep=""),
                               paste('* k-mer_cov obs.: ',     first_peak_pos, sep=""),
-                              paste('* signal_error_border ', het_min_valid_pos,                                           sep=""),
+                              paste('* signal_error_border ', het_min_valid_pos,                 sep=""),
                               paste('Heterozygous fitting (intermediate info)'),
-                              paste('* het rate: ',     round(alpha, digits=8),  " (ori) : (cor) ", round(alpha_cor, digits = 8),      sep=""),
+                              paste('* het rate: ',
+                                    round(alpha, digits=8),  " (ori) : (cor) ",
+                                    round(alpha_cor, digits = 8),                                sep=""),
                               paste('Fitted count with fitted k-mer_cov: ',
                                     round(genome_size_fitted/10^6, digits = 3), ' Mb',           sep=""),
-                              paste('* k-mer_cov fit.: ',     round(fitted_peak_value, digits=2),                          sep=""),
-                              paste('* 1st-sd:',              round(first_sd, digits=2),                                   sep=""),
-                              paste('* 1st-skewness: ',       round(myxifit[1], digits=2),                                 sep=""),
+                              paste('* k-mer_cov fit.: ',
+                                    round(fitted_peak_value, digits=2),                          sep=""),
+                              paste('* 1st-sd:',
+                                    round(first_sd, digits=2),                                   sep=""),
+                              paste('* 1st-skewness: ',
+                                    round(myxifit[1], digits=2),                                 sep=""),
                               paste('Fitted+obs. with corrected k-mer_cov: ',
                                     round(genome_size_corrected2/10^6, digits = 3), ' Mb',       sep=""),
-                              paste('* k-mer_cov cor.: ',     round(first_mean_raw, digits=2),                             sep=""),
-                              paste('* repetitive_ratio ',    round(repsize/genome_size_corrected2, digits=2), ': ',
+                              paste('* k-mer_cov cor.: ',
+                                    round(first_mean_raw, digits=2),                             sep=""),
+                              paste('* repetitive_ratio ',
+                                    round(repsize/genome_size_corrected2, digits=2), ': ',
                                     round(repsize/10^6, digits = 3), ' Mb',                      sep="")),
                    border="NA",
                    cex=0.7)
@@ -886,8 +892,10 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
           else
           {
             legend("topright",
-                   fill   = c('gray','white', 'white', 'blue', 'white', 'white', 'white', 'red', 'white', 'white'),
-                   legend = c(paste('Observed (obs.): ',      round(genome_size/10^6, digits = 3), ' Mb (error-excluded: ',
+                   fill   = c('gray','white', 'white', 'blue', 'white',
+                              'white', 'white', 'red', 'white', 'white'),
+                   legend = c(paste('Observed (obs.): ',
+                                    round(genome_size/10^6, digits = 3), ' Mb (error-excluded: ',
                                     round(genome_size_filtering_error/10^6, digits = 3), ' Mb)',               sep=""),
                               paste('* k-mer_cov obs.: ',     first_peak_pos, sep=""),
                               paste('* signal_error_border ', het_min_valid_pos,                               sep=""),
@@ -899,7 +907,8 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
                               paste('Fitted+obs. with corrected k-mer_cov: ',
                                     round(genome_size_corrected2/10^6, digits = 3), ' Mb',                     sep=""),
                               paste('* k-mer_cov cor.: ',     round(first_mean_raw, digits=2),                 sep=""),
-                              paste('* repetitive_ratio ',    round(repsize/genome_size_corrected2, digits=2), ': ',
+                              paste('* repetitive_ratio ',
+                                    round(repsize/genome_size_corrected2, digits=2), ': ',
                                     round(repsize/10^6, digits = 3), ' Mb',                                    sep="")),
                    border="NA",
                    cex=0.7)
