@@ -128,11 +128,12 @@ kmer_count_modify <- function(start, end, left_right, histx)
 #' @param outdir is the path to write output files (optional).
 #' If not provided, by default results will be written in the folder
 #' where the histo file is.
-#' @param exp_hom a rough average k-mer coverage for the homozygous regions.
+#' @param exp_hom a rough average k-mer coverage for finding the homozygous regions.
 #' In general, one can get peaks in the k-mer frequencies file, but has to
 #' determine which one is for the homozygous regions, and which one is for the
 #' heterozygous regions. It is optional, however, it must be provided
 #' if one wants to estimate size for a heterozygous genome.
+#' VALUE for exp_hom must satisfy fp < VALUE < 2*fp; fp is the freq for homozygous peak.
 #' If not provided, 0 by default assumes the genome is homozygous.
 #' @param species an optional parameter only applied in calculating heterozygosity for human.
 #' This is used to indicate that (lx-ly)*hom_c/2 k-mers should be removed from het-kmers,
