@@ -1,1 +1,3 @@
 Here are the toy examples for estimating size of heterozygous and homozygous genomes.
+
+In folder heterozygous/homozygous, there is a .sh file listing the steps to run the example.
