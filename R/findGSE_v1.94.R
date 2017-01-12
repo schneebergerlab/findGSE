@@ -1021,7 +1021,7 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
                      ".fitted.txt", sep=""),
         append = T,
         sep = " ")
-  if(only_one_hom_peak)
+  if(het_observed & only_one_hom_peak)
   {
     write(paste("het_fitting_delta ", round(het_fitting_delta, digits=8), sep=""),
           file = paste(path, '/',prefix, vers, 'est.',
