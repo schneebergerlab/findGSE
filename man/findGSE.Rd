@@ -16,11 +16,12 @@ findGSE(histo = "", sizek = 0, outdir = "", exp_hom = 0, species = "")
 If not provided, by default results will be written in the folder
 where the histo file is.}
 
-\item{exp_hom}{a rough average k-mer coverage for the homozygous regions.
+\item{exp_hom}{a rough average k-mer coverage for finding the homozygous regions.
 In general, one can get peaks in the k-mer frequencies file, but has to
 determine which one is for the homozygous regions, and which one is for the
 heterozygous regions. It is optional, however, it must be provided
 if one wants to estimate size for a heterozygous genome.
+VALUE for exp_hom must satisfy fp < VALUE < 2*fp, where fp is the freq for homozygous peak.
 If not provided, 0 by default assumes the genome is homozygous.}
 
 \item{species}{an optional parameter only applied in calculating heterozygosity for human.
