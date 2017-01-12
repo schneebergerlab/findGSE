@@ -5,4 +5,3 @@ size_fit 1532168
 size_cor2 1498918
 Est. ratio of repeats 1.33e-06
 Final k-mer cov 33.86020806
-het_fitting_delta 0.11
