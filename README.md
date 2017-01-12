@@ -17,6 +17,7 @@ After getting the .histo file, supposing findGSE is installed, we can do the fol
   findGSE(histo="test_21mer.histo", sizek=21, outdir="hom_test_21mer")
 ```
 
-Results will be printed like "Genome size estimate for test_21mer.histo: 1498918 bp." For more information, one can check the .txt and .pdf file in the output dir as provided.
+Results will be printed like "Genome size estimate for test_21mer.histo: 1498918 bp." 
+For more information about estimation, one can check the .txt and .pdf file in the output dir as provided.
 
-For more information, two toy examples about GSE for heterozygous and homozygous genomes are provided under findGSE/example/  .
+Two detailed toy examples about GSE for heterozygous and homozygous genomes are provided under findGSE/example/  .
