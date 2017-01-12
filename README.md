@@ -10,11 +10,13 @@ Given multiple fastq.gz files, here is a two-step example for counting k-mers wi
   jellyfish histo -h 3000000 -o test_21mer.histo test_21mer
 ```
 
-After getting the histo file, supposing findGSE is installed, we can do the following under R environment:
+After getting the .histo file, supposing findGSE is installed, we can do the following for GSE under R environment:
 
 ```R
   library("findGSE")
-  findGSE(histo="test_21mer.histo", sizek=21, outdir="hom_test_21mer.histo")
+  findGSE(histo="test_21mer.histo", sizek=21, outdir="hom_test_21mer")
 ```
+
+Results will be printed like "Genome size estimate for test_21mer.histo: 1498918 bp." For more information, one can check the .txt and .pdf file in the output dir as provided.
 
 For more information, two toy examples about GSE for heterozygous and homozygous genomes are provided under findGSE/example/  .
