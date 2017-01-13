@@ -4,7 +4,7 @@
 
 cd example/homozygous/
 
-# step 0. simulate a genome: 3 sequences of 500000 bp long; A/C/G/T equal at 25 percent. In total 1.5 Mb.
+# step 0. simulate a genome: 3 sequences of 500000 bp long; A/C/G/T equal at 25 percent. In total 1.5 Mb  saved in file random_sequences_set.fa.
 
 perl ../random_dna_strings.pl
 
