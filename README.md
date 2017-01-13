@@ -10,7 +10,7 @@ Given multiple fastq.gz files, here is a two-step example for counting *k*-mers 
   jellyfish histo -h 3000000 -o test_21mer.histo test_21mer
 ```
 
-After getting the .histo file, supposing findGSE has been installed ([INSTALL](https://github.com/schneebergerlab/findGSE/blob/master/INSTALL)), we can do the following for GSE under R environment:
+After getting the .histo file, supposing findGSE has been installed ([INSTALL](https://github.com/schneebergerlab/findGSE/blob/master/INSTALL)), we can do the following for GSE under *R* environment:
 
 ```R
   library("findGSE")
