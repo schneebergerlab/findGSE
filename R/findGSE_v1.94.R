@@ -296,10 +296,10 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
             plot(dhet[, 1], dhet[, 2],
                  col="gray",
                  xlab="K-mer freq", ylab="Number of k-mers",
-                 xlim=c(1, selected), ylim=c(1, 1.5*max(dhet[3:selected, 2])))
-            text(100, max(dhet[3:selected, 2]),
-                 paste("Main peak at k-mer freq: ",
-                       which.max(dhet[3:selected, 2])+2,
+                 xlim=c(1, selected), ylim=c(1, 1.5*max(dhet[5:selected, 2])))
+            text(selected/2, 1.1*max(dhet[5:selected, 2]),
+                 paste("Main peak (after freq=5) at k-mer freq: ",
+                       which.max(dhet[5:selected, 2])+4,
                        sep=""))
             dev.off();
             stop("No k-mer freq peak was found with the cutoff given -exp_hom.
