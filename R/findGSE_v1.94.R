@@ -319,6 +319,16 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
             het_peak_pos <- hom_peak_pos
             hom_peak_pos <- tmp
           }
+          if(het_peak_pos>0 & hom_peak_pos>0)
+          {
+            # in case two peask are near each due to super high k-mer coverage (>100x)
+            ratio        <- hom_peak_pos/het_peak_pos;
+            if (round(ratio)<1.5) # nearly equal
+            {
+              hom_peak_pos <- max(hom_peak_pos, het_peak_pos)
+              het_peak_pos <- max(hom_peak_pos, het_peak_pos)
+            }
+          }
           # if one peak  found, need to check if it is hom or het accordingly
           main_peak_is_hom  <- T
           only_one_hom_peak <- F
