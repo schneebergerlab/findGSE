@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# For any questions, please contact via sunhequan@gmail.com .
+# For any questions on usage or potential bugs, please contact via schneeberger@mpipz.mpg.de or sunhequan@gmail.com .
 #
 ##  Assumption and process
 ###  assume a skew normal distribution of kmer-freq in
@@ -25,9 +25,9 @@
 ###    a sequence (to initialize mean and variance of a skew-normal-distribution)
 ###  optimize the skew-normal dsitribution curve to fit the observed
 ###    values from proper 'xleft' to 'xright'
-## Result: the estimate is corrected to be larger or smaller (also due to
+## Result: the estimate is corrected to be larger or smaller (due to
 ##   the left/right-shift of the fitted peak; estimated counts from 1, 2,...
-##   can also result in the increased estimates).
+##   can result in the increased estimates).
 ## correction on 15mer, 17mer.
 ## with first fitting if 'heterozygous' known! -- to use fitting for heterozygous,
 ##   expected Kmer coverage for homozygous region must be provided.
@@ -35,7 +35,8 @@
 ##
 ## output:
 ##  curve-fit .pdf: *curvefitted.pdf, and a corresponding
-##            .txt: listing estimates (naive, fitted and final-corrected).
+##            .txt: listing gs estimates (naive, fitted and final-corrected)
+##                  and some other info like repetitive ration (and hetero-rate).
 
 ## function for minimizing difference from original observed kmer-freq dr: mean, sd, xi, and scaling factor ##
 error_minimize<-function(tooptimize, x, end, xfit, xfit_left, xfit_right, d, min_valid_pos, itr)
@@ -60,7 +61,7 @@ error_minimize<-function(tooptimize, x, end, xfit, xfit_left, xfit_right, d, min
   #
   return(diff0)
 }
-# function for tunning final fitting
+# function for tunning final fitting if heterozgyous genomes
 error_minimize2<-function(tooptimize, h_het, h_hom, h_target)
 {
   # h_het   : raw fitting for the heterozygous region
@@ -73,7 +74,7 @@ error_minimize2<-function(tooptimize, h_het, h_hom, h_target)
   #
   return(diff2)
 }
-# recover count 0: in initial count, kmer freq can be inconsecutive.
+# recover count 0: in initial count, making kmer freq consecutive.
 initial_count_recover <- function(d0)
 {
   # dr: the initial kmer count from softwares like jellyfish
@@ -155,12 +156,12 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
     stop(paste("Cannot find sizek info: ", sizek, ". Program exited.\n",sep=""))
   }
   # defaults
-  if(missing(exp_hom))           exp_hom           <- 0
-  if(missing(outdir))            outdir            <- getwd()
+  if(missing(exp_hom))  exp_hom <- 0
+  if(missing(outdir))   outdir  <- getwd()
   ######################################## libararies required ###############################################
   # find all peaks in a time series
   suppressWarnings(suppressMessages(library("pracma")))
-  # skew normal distrbution fitting (dsnorm(...))
+  # provide skew normal distrbution fitting (dsnorm(...))
   suppressWarnings(suppressMessages(library("fGarch")))
   ## version id
   vers <- 'v1.94.'
@@ -302,7 +303,7 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
                        which.max(dhet[5:selected, 2])+4,
                        sep=""))
             dev.off();
-            stop("No k-mer freq peak was found with the cutoff given -exp_hom.
+            stop("No k-mer freq peak was found with the cutoff given by -exp_hom.
                   You may need to increase the cutoff!")
             quit("no")
           }
@@ -321,7 +322,7 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
           }
           if(het_peak_pos>0 & hom_peak_pos>0)
           {
-            # in case two peask are near each due to super high k-mer coverage (>100x)
+            # in case two peask are near each other (e.g. it may happen with k-mer cov >100x)
             ratio        <- hom_peak_pos/het_peak_pos;
             if (round(ratio)<1.5) # nearly equal
             {
@@ -368,7 +369,7 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
                 stop("Unexpected peaks found -
                      please check the raw k-mer curve provided in pdf,
                      and reset the option -exp_hom with a proper value x,
-                     which must satisfy x>hom_peak and x*0.5>het_peak !\n\n");
+                     which must satisfy 2*hom_peak>x>hom_peak !\n\n");
               }
           }
           cat('    Info: het_peak_pos for het fitting: ', het_peak_pos, '\n')
