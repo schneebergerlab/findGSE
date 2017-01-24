@@ -17,11 +17,13 @@ tar -czvf findGSE-master.tar.gz findGSE-master/
 
 ## 1.2 install under R
 
+```R
 R
 install.packages("findGSE-master.tar.gz")
 q("no")
+```R
 
 # way 2: from github
 
-# install.packages("devtools")
-# devtools::install_github("schneebergerlab/findGSE")
+ install.packages("devtools")
+ devtools::install_github("schneebergerlab/findGSE")
