@@ -21,7 +21,7 @@
  install.packages("findGSE-master.tar.gz")
  q("no")
 
-# way 2: from github
+# way 2: direct install from github
 
  install.packages("devtools")
  devtools::install_github("schneebergerlab/findGSE")
