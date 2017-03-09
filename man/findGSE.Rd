@@ -10,7 +10,8 @@ findGSE(histo = "", sizek = 0, outdir = "", exp_hom = 0, species = "")
 \arguments{
 \item{histo}{is the histo file (mandatory).}
 
-\item{sizek}{is the size of k used to generate the histo file (mandatory).}
+\item{sizek}{is the size of k used to generate the histo file (mandatory).
+K is involved in calculating heterzygosity if the genome is heterozygous.}
 
 \item{outdir}{is the path to write output files (optional).
 If not provided, by default results will be written in the folder
