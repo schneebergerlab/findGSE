@@ -20,4 +20,4 @@ After getting the .histo file, supposing findGSE has been installed ([INSTALL](h
 Results will be printed like "Genome size estimate for test_21mer.histo: 1498918 bp." 
 For more information about estimation, one can check the .txt and .pdf files in the output dir.
 
-Two detailed [toy examples about GSE for heterozygous and homozygous genomes] (https://github.com/schneebergerlab/findGSE/tree/master/example) are provided for playing around.
+Two detailed [toy examples about GSE for heterozygous and homozygous genomes](https://github.com/schneebergerlab/findGSE/tree/master/example) are provided for playing around.
