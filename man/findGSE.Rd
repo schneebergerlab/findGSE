@@ -43,6 +43,7 @@ which contains two tab-separated columns.
 The first column gives frequencies at which k-mers occur in reads,
 while the second column gives counts of such distinct k-mers.
 Parameters k and related histo file are required for any estimation.
+Dependencies (R library) required: pracma, fGarch - see INSTALL.
 
 For heterozygous genomes, another parameter about
 the average k-mer coverage for the homozygous regions must be provided.
