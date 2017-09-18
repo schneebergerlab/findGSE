@@ -55,6 +55,9 @@ error_minimize<-function(tooptimize, x, end, xfit, xfit_left, xfit_right, d, min
   meanfit            <- mean(x[x>=xfit_left & x<=xfit_right])*mean_scale_factor
   sdfit              <- sd(x[  x>=xfit_left & x<=xfit_right])*sd_scale_factor
   xifit              <- 1*xi_scale_factor
+  #cat(paste("   Info: initialized mean as ", meanfit, "\n", sep=""))
+  #cat(paste("   Info: initialized sd   as ", sdfit, "\n", sep=""))
+  #cat(paste("   Info: initialized skew as ", xifit, "\n", sep=""))
   yfit               <- dsnorm(xfit,mean=meanfit,sd=sdfit, xi=xifit)*yfit_scale_factor*length(x)
   diff0              <- sqrt(sum((d[min_valid_pos:end, 2] - yfit[min_valid_pos:end])^2))
   #
@@ -127,6 +130,7 @@ kmer_count_modify <- function(start, end, left_right, histx)
   }
   return (histx)
 }
+#
 ################################################## main #############################################################
 #' @title Estimating genome size by fitting k-mer frequencies in short reads
 #' with a skew normal distribution model.
@@ -507,6 +511,9 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
               {
                 peaks           <- findpeaks(error[3:selected, 2])
                 peaks[,2:4]     <- peaks[,2:4]+2
+                ## new on 2017-09-16
+                peaks           <- filter_peaks(peaks, error)
+                ## end 2017-09-16
                 border_pos      <- peaks[1, 3]          # caution: peaks[peakindex, 3]
               }
               peakindex         <- which.max(peaks[,1]) # caution: if double peaks
@@ -532,7 +539,7 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
               }
               if(dci   > datacheck)
               {
-                cat(paste("Error: weired initial count-data of sample ",
+                cat(paste("Error: weird initial count-data of sample ",
                           sample, ". Please check!!!\n",
                           sep=""))
                 normal <- 1
@@ -637,8 +644,8 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
             xfit_right <- 2*original_peak_pos-1
             if(first_peak_pos>=100 && itr<2)
             {
-              xfit_left  <- original_peak_pos - 30
-              xfit_right <- original_peak_pos + 30
+              xfit_left  <- original_peak_pos - 20
+              xfit_right <- original_peak_pos + 20
             }else
             if(first_peak_pos>=30  && itr<2)
             {
@@ -711,12 +718,12 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
           # plot
           if(i == 1)
           {
-            # plot(error[1:maxright4fit, 1], abs(error[1:maxright4fit, 2]),
+            #plot(error[1:maxright4fit, 1], abs(error[1:maxright4fit, 2]),
             #      xlim=c(0, min(maxright4fit, 4*meanfit)), ylim=c(0, 1.5*max(error[xfit_left:maxright4fit, 2])),
             #      type='b', col="gray",
             #      xlab="K-mer Coverage", ylab="Genomewide k-mer Frequency")
             # title(main=paste('Example: fitting at itr ', itr, 'of sample ', sample, 'k=', sizek, ')'),
-            #      cex.main=0.8)
+            #     cex.main=0.8)
             # lines(xfit2[100:length(xfit2)], yfit0[100:length(xfit2)], col="blue", lwd=2)
           }
           #### begin
@@ -1167,4 +1174,71 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
   #
   end_t <- Sys.time()
   cat('Time consumed: ', format(end_t-start_t), '\n')
+}
+##
+## additional
+filter_peaks <- function(peaks, histo)
+{
+  # find out a major peak with enough support information on both sides (to exlcude potential local maxima)
+  pos <- 1 # peak position (namely, the k-mer freq at the peak)
+  i   <- 0 # traverse candidate peaks
+  # a peak freq=pos should start at least from 5, or else too small to perform curve fitting
+  while(pos < 5 & i < length(peaks[,1]))
+  {
+    i <- i+1
+    pos <- peaks[i, 2] # x-axis peak
+  }
+  if(pos < 5)
+  {
+    stop(paste("   Error: k-mer coverage seemed too low to perform fitting. Minimum average k-mer coverage 5 required. Program exited.\n",sep=""))
+  }
+  # check if there are enough support on both sides of pos
+  while(i < length(peaks[,1]))
+  {
+    # check left: how many on left are smaller than count at current peak
+    posleft <- pos - 1
+    j <- 0 # counter of smaller cases on left
+    while(posleft>=1)
+    {
+      if(histo[posleft, 2] < histo[pos, 2])
+      {
+        j <- j + 1;
+      }
+      posleft <- posleft - 1
+    }
+    # check right: if there are right-side counts larger than count at the current peak
+    posright <- pos + 1
+    k <- 0 # counter of larger cases on right
+    maxpos <- peaks[length(peaks[,1]), 2]
+    while(posright < maxpos)
+    {
+      if(histo[posright, 2] > histo[pos, 2])
+      {
+        k <- k + 1
+        if(k>4)
+        {
+          break
+        }
+      }
+      posright <- posright + 1
+    }
+    # condition to continue or break
+    if(j <= 4 || k>4)
+    {
+      i <- i + 1
+      pos <- peaks[i, 2] # x-axis peak
+    }
+    else
+    {
+      break
+    }
+  }
+  # filter out peaks near erroneous peak
+  rpeaks <- peaks
+  fpi <- 1
+  while(rpeaks[fpi, 2] < pos/4)
+  {
+    rpeaks <- rpeaks[-fpi,]
+  }
+  return(rpeaks)
 }
