@@ -890,7 +890,7 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
           {
             end_for_mean <- round(fitted_peak_value*2 - fitted_peak_value*2/4) # >7% error; k should be small
           }else
-          if((sizek=="15" | sizek=="17") && myxifit[1]>=0.93 && myxifit[1]<=1.07) # normal case: reduce effect of copy-2 k-mers
+          if((sizek=="15" || sizek=="17") && myxifit[1]>=0.93 && myxifit[1]<=1.07) # normal case: reduce effect of copy-2 k-mers
           {
             end_for_mean <- round(fitted_peak_value*2 - fitted_peak_value*1/4)
           }else
