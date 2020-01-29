@@ -407,8 +407,16 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
           cat('    Info: hom_peak_pos for hom fitting: ', hom_peak_pos, '\n')
           het_min_valid_pos <- which.min(error[1:het_peak_pos, 2])
           # fit het distribution
-          het_xfit_left     <- max(min(het_min_valid_pos, het_peak_pos-10), 3)
-          het_xfit_right   <- het_peak_pos + round(0.5*(hom_peak_pos-het_peak_pos))
+          het_xfit_left     <- max(min(het_min_valid_pos, het_peak_pos-10), 3)        # update on 20200129
+          if(het_peak_pos   > 80)
+          {
+            het_xfit_left  <- floor(het_xfit_left+het_peak_pos*0.1473684)
+          }
+          het_xfit_right   <- het_peak_pos + round(0.5*(hom_peak_pos-het_peak_pos))   # update on 20200129
+          if(het_peak_pos   > 80)
+          {
+            het_xfit_right <- floor(het_xfit_right-het_peak_pos*0.1473684)
+          }
           cat('    Info: het_xfit_left  for het fitting: ', het_xfit_left, '\n')
           cat('    Info: het_xfit_right for het fitting: ', het_xfit_right, '\n')
           if(het_xfit_right > het_peak_pos-1 - het_xfit_left + het_peak_pos-1)
