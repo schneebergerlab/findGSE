@@ -922,14 +922,14 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
             end_for_mean     <- min(end_for_mean, length(dr[,1])) ####
             #cat("end_for_mean (only one het peak): ", end_for_mean, '\n')
             xtmp             <- rep(1:end_for_mean,ceiling(abs(round(hetfit[1:end_for_mean]))/1000))
-            first_mean_raw   <- 2*mean(xtmp[xtmp>=1 && xtmp<=end_for_mean])
+            first_mean_raw   <- 2*mean(xtmp[xtmp>=1 & xtmp<=end_for_mean])
           }else
             if(het_observed & main_peak_is_hom==F)
             {
               het_end_for_mean <- first_peak_pos
               het_end_for_mean <- min(het_end_for_mean, length(dr[,1])) ####
               xtmp             <- rep(1:het_end_for_mean,ceiling(abs(round(hetfit[1:het_end_for_mean]))/1000))
-              first_mean_raw   <- 2*mean(xtmp[xtmp>=1 && xtmp<=het_end_for_mean])
+              first_mean_raw   <- 2*mean(xtmp[xtmp>=1 & xtmp<=het_end_for_mean])
             }else
               if(het_observed && only_one_hom_peak) # caution: expert suppl.
               {
@@ -951,11 +951,11 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
                 }
                 ## end   of specific in v1.94
                 xtmp           <- rep(1:end_for_mean,dtmp)
-                first_mean_raw <- mean(xtmp[xtmp>=1 && xtmp<=end_for_mean])
+                first_mean_raw <- mean(xtmp[xtmp>=1 & xtmp<=end_for_mean])
               }else
               {
                 xtmp           <- rep(1:end_for_mean,ceiling(abs(round(yfit2[1:end_for_mean]-hetfit[1:end_for_mean]))/1000))
-                first_mean_raw <- mean(xtmp[xtmp>=1 && xtmp<=end_for_mean]);
+                first_mean_raw <- mean(xtmp[xtmp>=1 & xtmp<=end_for_mean]);
               }
           #
           genome_size_corrected2 <- round(sum(c(1:length(yfit2))*yfit2[1:length(yfit2)]/first_mean_raw))
