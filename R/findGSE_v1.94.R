@@ -1,7 +1,7 @@
 # findGSE: estimating genome size by fitting k-mer frequencies in short reads
 #          with a skew normal distribution model.
 #
-# Copyright (C) 2016-2017 Hequan Sun (MPIPZ)
+# Copyright (C) 2016-2024 Hequan Sun (MPIPZ)
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
