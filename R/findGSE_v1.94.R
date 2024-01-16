@@ -1115,7 +1115,7 @@ findGSE <- function(histo="", sizek=0, outdir="", exp_hom=0, species="")
       cat("\n caution: some samples have NA predicted for fitted   genome size!\n")
       genome_size_summary2[is.na(genome_size_summary2)] <- 0
     }
-    if(length(genome_size_summary[1,])!=0 && length(genome_size_summary2[1,])!=0)
+    if(length(genome_size_summary[1,])!=0 & length(genome_size_summary2[1,])!=0)
     {
       # record in file
       write.table(genome_size_summary,
